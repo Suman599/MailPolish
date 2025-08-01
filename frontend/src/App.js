@@ -24,7 +24,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-blue-600 text-white text-center py-4 mt-auto">
-        <p className="text-sm">© 2025 AI Email Tone Improver. All rights reserved.</p>
+        <p className="text-sm">© 2025 Mailpolish, Powered By Gemini Pro. All rights reserved.</p>
       </footer>
     </div>
   );
