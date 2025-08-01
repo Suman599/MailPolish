@@ -21,13 +21,6 @@ With a single click, transform any rough draft into **polished, workplace-ready 
 
 ---
 
-## 🖼️ Preview  
-
-![MailPolish Screenshot](./preview.png)  
-*(Add your project screenshot here)*  
-
----
-
 ## 🛠️ Tech Stack  
 
 - **Frontend:** React, TailwindCSS  
