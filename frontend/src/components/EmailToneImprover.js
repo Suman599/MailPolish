@@ -19,9 +19,10 @@ export default function EmailToneImprover() {
 
     try {
       const response = await fetch(`${API_URL}/api/improve-email`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailText, tone }),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ emailText, tone }),
+
       });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
