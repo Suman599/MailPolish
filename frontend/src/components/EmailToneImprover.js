@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-const API_URL = process.env.REACT_APP_API_URL;
+
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 export default function EmailToneImprover() {
   const [emailText, setEmailText] = useState('');
   const [tone, setTone] = useState('formal');
   const [improvedSections, setImprovedSections] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleImprove = async () => {
     if (!emailText.trim()) return;
 
     setLoading(true);
+    setError('');
     setImprovedSections([]);
 
     try {
-      const response = await fetch('${API_URL}/api/improve-email', {
+      const response = await fetch(`${API_URL}/api/improve-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ emailText, tone }),
       });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       const data = await response.json();
       console.log("🔹 Frontend API response:", data);
@@ -28,17 +34,16 @@ export default function EmailToneImprover() {
       setImprovedSections(sections);
     } catch (error) {
       console.error(error);
-      setImprovedSections(["❌ Error: Failed to get improved email."]);
+      setError("❌ Failed to get improved email.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleCopy = (text) => {
-    // Convert markdown to plain text
     const plainText = text
-      .replace(/[#*_>`]/g, '')        // strip markdown characters
-      .replace(/\n{2,}/g, '\n\n')     // normalize line breaks
+      .replace(/[#*_>`]/g, '')
+      .replace(/\n{2,}/g, '\n\n')
       .trim();
 
     navigator.clipboard.writeText(plainText);
@@ -47,7 +52,6 @@ export default function EmailToneImprover() {
 
   return (
     <div>
-      {/* Input box */}
       <textarea
         className="w-full p-4 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4"
         rows="6"
@@ -56,7 +60,6 @@ export default function EmailToneImprover() {
         onChange={(e) => setEmailText(e.target.value)}
       />
 
-      {/* Tone buttons */}
       <div className="flex gap-3 mb-4 flex-wrap">
         {['formal', 'friendly', 'concise', 'apologetic'].map((option) => (
           <button
@@ -73,7 +76,6 @@ export default function EmailToneImprover() {
         ))}
       </div>
 
-      {/* Improve button */}
       <button
         onClick={handleImprove}
         disabled={loading}
@@ -86,7 +88,8 @@ export default function EmailToneImprover() {
         {loading ? 'Improving...' : 'Improve Tone'}
       </button>
 
-      {/* Result cards */}
+      {error && <p className="text-red-500 mt-3">{error}</p>}
+
       {improvedSections.length > 0 && (
         <div className="mt-6 space-y-4">
           {improvedSections.map((section, index) => (
@@ -119,7 +122,6 @@ export default function EmailToneImprover() {
                 {section}
               </ReactMarkdown>
 
-              {/* Copy button */}
               <button
                 onClick={() => handleCopy(section)}
                 className="absolute top-3 right-3 bg-green-100 hover:bg-green-200 px-3 py-1 rounded text-green-700 text-sm"
