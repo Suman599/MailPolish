@@ -6,9 +6,17 @@ export default function App() {
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Navbar */}
       <nav className="bg-blue-600 text-white px-6 py-4 shadow-lg">
+        
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">AI Email Tone Improver</h1>
           
+          <div className="flex items-center space-x-3">
+          <img 
+            src="/logo.png"   // Place your image inside public/logo.png
+            alt="MailPolish Logo" 
+            className="h-10 w-10 object-contain"
+          />
+          <h1 className="text-2xl font-bold">AI Email Tone Improver</h1>
+          </div>
         </div>
       </nav>
 
