@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-
+const API_URL = process.env.REACT_APP_API_URL;
 export default function EmailToneImprover() {
   const [emailText, setEmailText] = useState('');
   const [tone, setTone] = useState('formal');
